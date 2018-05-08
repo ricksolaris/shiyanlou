@@ -35,7 +35,7 @@ def main():
             salary_id = salary_info[0]
             salary = int(salary_info[1])
             after_tax = float(salary) - float(salary * 0.165) - float(tax_calc(salary))
-            print(str(salary_id)+':'+str(after_tax))
+            print(str(salary_id)+':'+'{:.2f}'.format(after_tax))
     except ValueError:
         print('Parameter Error')
         exit()

@@ -5,7 +5,7 @@ import sys
 
 
 def tax_calc(salary):
-    taxable_part = salary - 3500
+    taxable_part = salary - 3500 - salary*0.165
     if taxable_part <= 0:
         return '0.00'
     insurance_list = [
@@ -18,21 +18,28 @@ def tax_calc(salary):
         (0, 0.03, 0)
     ]
     for insurance in insurance_list:
+        #print(insurance[0],insurance[1])
         if taxable_part > insurance[0]:
             result = taxable_part*insurance[1]-insurance[2]
             return '{:.2f}'.format(result)
         #return sum_insurance
         #print(sum_insurance)
 def main():
-    if len(sys.argv) != 2:
-        print('Parameter Error')
-        exit()
+    # if len(sys.argv) != 2:
+    #     print('Parameter Error')
+    #     exit()
     try:
-        salary = int(sys.argv[1])
+        for arg in sys.argv[1:]:
+            salary_info = arg.split(':')
+            #print(salary_info)
+            salary_id = salary_info[0]
+            salary = int(salary_info[1])
     except ValueError:
         print('ValueError Parameter Error')
         exit()
-    print(tax_calc(salary))
+    #print(tax_calc(salary))
+    after_tax = float(salary) - float(salary*0.165) - float(tax_calc(salary))
+    print(salary_id,':',after_tax)
 
 if __name__ == '__main__':
     main()

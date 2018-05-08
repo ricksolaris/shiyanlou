@@ -23,17 +23,22 @@ def tax_calc(salary):
             return '{:.2f}'.format(result)
         #return sum_insurance
         #print(sum_insurance)
-
-if __name__ == '__main__':
+def main():
     if len(sys.argv) != 2:
+        print(len(sys.argv))
         print('Parameter Error')
+        print(sys.argv[1])
         exit()
     try:
         salary = int(sys.argv[1])
+        print(salary)
     except ValueError:
-        print('Parameter Error')
+        print('ValueError Parameter Error')
         exit()
     print(tax_calc(salary))
+    
+if __name__ == '__main__':
+    main()
 # for arg in sys.argv[1:]:
 #     #print(arg)
 #     #print(arg.split(':'))

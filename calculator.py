@@ -34,12 +34,13 @@ def main():
             #print(salary_info)
             salary_id = salary_info[0]
             salary = int(salary_info[1])
+            after_tax = float(salary) - float(salary * 0.165) - float(tax_calc(salary))
+            print(str(salary_id)+':'+str(after_tax))
     except ValueError:
-        print('ValueError Parameter Error')
+        print('Parameter Error')
         exit()
     #print(tax_calc(salary))
-    after_tax = float(salary) - float(salary*0.165) - float(tax_calc(salary))
-    print(salary_id,':',after_tax)
+
 
 if __name__ == '__main__':
     main()

@@ -1,7 +1,51 @@
 #!/usr/bin/env python3
 import sys
+import csv
 
 #dict_tax2 = {0:[0,0,0.03],1:[1500,105,0.1],2:[4500,555,0.2],3:[9000,1005,0.25],4:[35000,2755,0.3],5:[55000,5505,0.35],6:[80000,13505,0.45]}
+
+class Args(object):
+
+    def __init__(self):
+        self.args = sys.argv[1:]
+        #print(self.args)
+        def get_config(self):
+            index = self.args.index('-c')
+            configfile = self.args[index + 1]
+            # print(configfile)
+            return self._configfile
+
+        def get_userdata(self):
+            index = self.args.index('-d')
+            userfile = self.args[index + 1]
+            return self._userfile
+
+        def set_outfile(self):
+            index = self.args.index('-o')
+            outfile = self.args[index + 1]
+            return self._outfile
+
+        try:
+            index = self.args.index('-c')
+            configfile = self.args[index+1]
+            #print(configfile)
+            index = self.args.index('-d')
+            userfile = self.args[index+1]
+            index = self.args.index('-o')
+            outfile = self.args[index + 1]
+            #print(configfile,userfile,outfile)
+        except ValueError:
+            print('Parameter Error')
+            exit()
+
+class Config(object):
+
+    def __init__(self):
+        self.config = self._read_config()
+
+    def _read_config(self):
+        with open(self) as file:
+            config = file.read()
 
 
 def tax_calc(salary):
@@ -32,10 +76,10 @@ def main():
         for arg in sys.argv[1:]:
             salary_info = arg.split(':')
             #print(salary_info)
-            salary_id = salary_info[0]
-            salary = int(salary_info[1])
-            after_tax = float(salary) - float(salary * 0.165) - float(tax_calc(salary))
-            print(str(salary_id)+':'+'{:.2f}'.format(after_tax))
+            #salary_id = salary_info[0]
+            #salary = int(salary_info[1])
+            #after_tax = float(salary) - float(salary * 0.165) - float(tax_calc(salary))
+            #print(str(salary_id)+':'+'{:.2f}'.format(after_tax))
     except ValueError:
         print('Parameter Error')
         exit()
@@ -43,7 +87,11 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    #main()
+    root = Args()
+    cfg = Config()
+    cfg_file = cfg.get_config()
+
 # for arg in sys.argv[1:]:
 #     #print(arg)
 #     #print(arg.split(':'))

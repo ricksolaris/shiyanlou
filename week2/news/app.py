@@ -37,7 +37,7 @@ def not_found(error):
 def index():
     return render_template('index.html', title_list=files.get_title_list())
 
-@app.route('/file/<filename>')
+@app.route('/files/<filename>')
 def file(filename):
     file_item = files.get_by_filename(filename)
     if not file_item:

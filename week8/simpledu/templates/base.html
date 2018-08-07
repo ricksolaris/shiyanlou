@@ -28,6 +28,7 @@
                         {% if not current_user.is_authenticated %}
                           <li><a href="{{ url_for('front.register') }}">注册</a></li>
                           <li><a href="{{ url_for('front.login')  }}">登录</a></li>
+                          <li><a href="{{ url_for('front.logout') }}">退出登录</a></li>
                         {% else %}
                           <li class="dropdown">
                               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ current_user.username }}<span class="caret"></span></a>
@@ -45,6 +46,16 @@
 
 
         <div class="container">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible" role="alert">
+                    <button type="button" class="clolse" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    {{ message }}
+                </div>
+                {% endfor %}
+                {% endif %}
+            {% endwith %}
             {% block body %}{% endblock %}
             {% block footer %}{% endblock %}
         </div>

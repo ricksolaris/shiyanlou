@@ -1,9 +1,9 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request, current_app
 from simpledu.models import Course
 from simpledu.forms import LoginForm, RegisterForm
 from flask import flash
 from flask import redirect, url_for
-from flask_login import login_user
+from flask_login import login_user, logout_user, login_required
 from simpledu.models import User
 
 
@@ -11,8 +11,15 @@ front = Blueprint('front', __name__)
 
 @front.route('/')
 def index():
-    courses = Course.query.all()
-    return render_template('index.html', courses=courses)
+    page = request.args.get('page', default=1, type=int)
+    pagination = Course.query.paginate(
+        page = page,
+        per_page = current_app.config['INDEX_PER_PAGE'],
+        error_out = False
+    )
+
+    #courses = Course.query.all()
+    return render_template('index.html', pagination=pagination)
 
 @front.route('/login', methods=['GET', 'POST'])
 def login():
@@ -31,3 +38,11 @@ def register():
         flash('注册成功，请登录！', 'success')
         return redirect(url_for('.login'))
     return render_template('register.html', form=form)
+
+
+@front.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    flash('您已经退出登录', 'success')
+    return redirect(url_for('.index'))

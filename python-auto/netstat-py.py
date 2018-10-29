@@ -68,10 +68,7 @@ def get_pid(inode):
 def main(choose):
     '''获取并展示端口连接相关信息
     '''
-    templ = "%-5s %-30s %-30s %-13s %-6s %s"
-    print(templ % (
-        "Proto", "Local address", "Remote address", "Status", "PID",
-        "Program name"))
+    
     content = get_content(choose)
 
     for info in content:
@@ -98,7 +95,17 @@ def main(choose):
 
 
 if __name__ == '__main__':
-    choose = 'tcp'
+    choose = 'all'
+    
     if len(sys.argv) > 1:
         choose = sys.argv[1]
-    main(choose)
+    templ = "%-5s %-30s %-30s %-13s %-6s %s"
+    print(templ % (
+        "Proto", "Local address", "Remote address", "Status", "PID",
+        "Program name"))
+    
+    if choose == "all":
+        for k in PROC_FILE:
+            main(k)
+    else:
+        main(choose)
